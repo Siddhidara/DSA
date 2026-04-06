@@ -5,10 +5,13 @@ class Solution {
         int count=0;
         for(int i=citations.length-1;i>=0;i--)
         {
-            count++;
-            if(count>citations[i])
+            if(citations[i]>count)
             {
-                return count-1;
+                count++;
+            }
+            else
+            {
+                break;
             }
         }
         return count;
