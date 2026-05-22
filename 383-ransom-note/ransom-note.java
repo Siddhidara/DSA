@@ -4,17 +4,17 @@ class Solution {
         {
             return false;
         }
-        HashMap<Integer,Integer> map=new HashMap<>();
-        HashMap<Integer,Integer> required=new HashMap<>();
-        for(int i:magazine.toCharArray())
+        HashMap<Character,Integer> map=new HashMap<>();
+        HashMap<Character,Integer> required=new HashMap<>();
+        for(char i:magazine.toCharArray())
         {
             map.put(i,map.getOrDefault(i,0)+1);
         }
-        for(int j:ransomNote.toCharArray())
+        for(char j:ransomNote.toCharArray())
         {
             required.put(j,required.getOrDefault(j,0)+1);
         }
-        for(Map.Entry<Integer,Integer> entry:required.entrySet())
+        for(Map.Entry<Character,Integer> entry:required.entrySet())
         {
             if(map.getOrDefault(entry.getKey(),0)<entry.getValue())
             {
