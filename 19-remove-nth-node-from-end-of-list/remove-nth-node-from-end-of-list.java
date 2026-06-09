@@ -12,15 +12,15 @@ class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         if(head.next==null)return null;
         ListNode curr=head;
-        if(n==1)
-        {
-            while(curr.next.next!=null)
-            {
-                curr=curr.next;
-            }
-            curr.next=null;
-            return head;
-        }
+        // if(n==1)
+        // {
+        //     while(curr.next.next!=null)
+        //     {
+        //         curr=curr.next;
+        //     }
+        //     curr.next=null;
+        //     return head;
+        // }
 
         ListNode newcurr=head;
         int i=1;
@@ -38,10 +38,7 @@ class Solution {
         {
             newcurr=newcurr.next;
         }
-        if(newcurr.next!=null && newcurr.next.next!=null)
-        {
         newcurr.next=newcurr.next.next;
-        }
         return head;
     }
 }
