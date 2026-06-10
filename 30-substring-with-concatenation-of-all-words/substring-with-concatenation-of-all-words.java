@@ -1,30 +1,75 @@
 class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
-        int size=words[0].length();
-        int array_size=words.length;
-        int total_size=array_size*size;
-        ArrayList<Integer> list=new ArrayList<>();
-        HashMap<String,Integer> wordmap=new HashMap<>();
-        for(String word:words)
-        {
-            wordmap.put(word,wordmap.getOrDefault(word,0)+1);
+
+        List<Integer> result = new ArrayList<>();
+
+        if (s.length() == 0 || words.length == 0) {
+            return result;
         }
-        
-        int i=0;
-        while(i<=s.length()-total_size)
-        {
-        HashMap<String,Integer> map=new HashMap<>();
-        for(int j=1;j<=array_size;j++)
-        {
-            String newstr=s.substring(i+(j-1)*size,i+j*size);
-            map.put(newstr,map.getOrDefault(newstr,0)+1);
+
+        int len = words[0].length();
+        int totalWords = words.length;
+        int strLen = s.length();
+
+        HashMap<String, Integer> required = new HashMap<>();
+
+        for (String word : words) {
+            required.put(word, required.getOrDefault(word, 0) + 1);
         }
-        if(map.equals(wordmap))
-        {
-            list.add(i);
+
+        for (int shift = 0; shift < len; shift++) {
+
+            HashMap<String, Integer> window = new HashMap<>();
+
+            int left = shift;
+            int wordsInWindow = 0;
+
+            for (int right = shift; right + len <= strLen; right += len) {
+
+                String word = s.substring(right, right + len);
+
+                if (required.containsKey(word)) {
+
+                    window.put(word,
+                            window.getOrDefault(word, 0) + 1);
+
+                    wordsInWindow++;
+
+                    while (window.get(word) > required.get(word)) {
+
+                        String leftWord =
+                                s.substring(left, left + len);
+
+                        window.put(leftWord,
+                                window.get(leftWord) - 1);
+
+                        left += len;
+                        wordsInWindow--;
+                    }
+
+                    if (wordsInWindow == totalWords) {
+
+                        result.add(left);
+
+                        String leftWord =
+                                s.substring(left, left + len);
+
+                        window.put(leftWord,
+                                window.get(leftWord) - 1);
+
+                        left += len;
+                        wordsInWindow--;
+                    }
+
+                } else {
+
+                    window.clear();
+                    wordsInWindow = 0;
+                    left = right + len;
+                }
+            }
         }
-        i++;
-        }
-        return list;
+
+        return result;
     }
 }
